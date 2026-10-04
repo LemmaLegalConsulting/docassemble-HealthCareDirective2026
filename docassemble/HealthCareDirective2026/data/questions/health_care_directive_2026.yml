@@ -1,301 +1,415 @@
-
-
-
----
-
 ---
 include:
-  - docassemble.AssemblyLine:assembly_line.yml
-  - docassemble.ALAnyState:any_state.yml
+- docassemble.AssemblyLine:assembly_line.yml
 ---
 metadata:
-  title: >-
-    Health Care Directive 2026
-  short title: >-
-    Health Care Directive 202
-  description: |-
-    This Health Care Directive allows you to appoint a health care agent to make decisions on your behalf if you are unable to do so. You can also provide specific health care instructions to guide your agent and health care providers. This document ensures your wishes are followed regarding medical treatments, end-of-life decisions, and more. It is an important step in planning for your future health care needs.
+  title: Minnesota health care directive
+  short title: Health care directive
+  description: |
+    Choose a health care agent, write health care instructions, or both.
   can_I_use_this_form: |
-    This form is for anyone who wants to ensure their health care preferences are respected. It's especially useful if you want someone to make decisions for you if you're unable to do so.
+    This form is for an adult making a Minnesota health care directive.
   before_you_start: |
-    ### Before you get started
-    - Gather information about who you want to appoint as your health care agent.
-    - Think about your health care preferences and values.
-    
-    ### When you are finished
-    - Sign and date the document.
-    - Have it witnessed or notarized as required.
+    Have the names and contact information for any agents you want to choose.
+    Think about the care you would want if you could not speak for yourself.
   when_you_are_finished: |
-    After completing the Health Care Directive, keep it in a safe place and share copies with your health care agent, family, and medical providers. Ensure that your doctor is aware of your directive and willing to follow your wishes. Regularly review and update the document as needed.
-  efiling_enabled: False
-  integrated_efiling: False
-  integrated_email_filing: False
-  requires_notarization: False
-  unlisted: False
-  landing_page_url: >-
-    https://courtformsonline.org/
-  maturity: production
-  estimated_completion_minutes: ""
-  estimated_completion_delta: ""
-  LIST_topics:
-    - "CO-00-00-00-00"
-  tags:
-    - "CO-00-00-00-00"
+    Review and print your directive. Complete the signing and witness or notary
+    sections before sharing signed copies with your agents and health care providers.
   authors:
-  original_form: []
-  original_form_published_on: ""
-  allowed_courts: []
-  typical_role: "unknown"
-  al_weaver_version: "2.1.0"
-  generated_on: "2026-06-10"
+  - Amanda Sauber
+  - Lemma Legal Consulting
+  jurisdiction: NAM-US-US+MN
+  LIST_topics:
+  - HE-00-00-00-00
+  original_form:
+  - https://www.revisor.mn.gov/statutes/cite/145C.16
+  maturity: testing
+  unlisted: true
+  requires_notarization: false
   languages:
-    - en
-  jurisdiction: "NAM-US-US+MA"
-  review_date: 2026-06-10
-  form_titles:
-    - Health Care Directive 2026
-  form_numbers: []
-  update_notes: |
+  - en
+  help_page_url: https://www.lawhelpmn.org/self-help-library/fact-sheet/health-care-directives
+  help_page_title: Health Care Directives
 ---
 code: |
-  # This controls the default country and list of states in address field questions
   AL_DEFAULT_COUNTRY = "US"
+  AL_DEFAULT_STATE = "MN"
+  al_form_type = "other_form"
+  user_role = "na"
+  user_ask_role = "na"
+  github_repo_name = "docassemble-HealthCareDirective2026"
+  signature_fields = []
 ---
-code: |
-  # This controls the default state in address field questions
-  AL_DEFAULT_STATE = ""
----
-code: |
-  github_repo_name =  'docassemble-HealthCareDirective2026'
----
-code: |
-  interview_short_title = 'Create your health care directive now'
----
-code: |
-  al_form_type = "other_form" 
+template: interview_short_title
+content: |
+  Make a Minnesota health care directive
 ---
 objects:
-  - users: ALPeopleList.using(there_are_any=True)
+- users: ALPeopleList.using(there_are_any=True, target_number=1)
+- primary_agent: ALIndividual
+- alternate_agent: ALIndividual
 ---
 sections:
-  - your_information: Your Information
-  - agents: Agents
-  - agent_contacts: Agent Contact Details
-  - agent_powers: Agent Powers and Limits
-  - review_health_care_directive_2026: Review your answers
+- about_you: About you
+- agents: Your agents
+- instructions: Your wishes
+- review_health_care_directive_2026: Review and download
 ---
-comment: |
-  Controls order and branching logic for questions specific to this form
-id: interview_order_health_care_directive_2026
-code: |
-  # Set the allowed courts for this interview
-  # Below sets the user_role and user_ask_role by asking a question.
-  # You can set user_ask_role directly instead to either 'plaintiff' or 'defendant'
-  user_ask_role
-  nav.set_section("your_information")
-  user_name
-  nav.set_section("agents")
-  health_care_agent
-  nav.set_section("agent_powers")
-  limits_on_powers
-  nav.set_section("agent_contacts")
-  set_progress(20)
-  agent[0].address.address
-  agent.gather()
-  nav.set_section("agents")
-  agent[0].phone_number
-  nav.set_section("agent_contacts")
-  set_progress(40)
-  agent[1].address.address
-  agent[1].phone_number
-  interview_order_health_care_directive_2026 = True
----
-comment: |
-  This block includes the logic for standalone interviews.
-  Delete mandatory: True to include in another interview
-mandatory: True
+mandatory: true
 code: |
   al_intro_screen
   health_care_directive_2026_intro
-  interview_order_health_care_directive_2026
-  signature_date
-  # Store anonymous data for analytics / statistics
-  store_variables_snapshot(
-      persistent=True,
-      data={
-          "zip": showifdef("users[0].address.zip"),
-          "reached_interview_end": True,
-      },
-  )
+  nav.set_section("about_you")
+  users[0].name.first
+  users[0].birthdate
+  users[0].address.address
+  directive_choices
+  if directive_choices["agent"]:
+    nav.set_section("agents")
+    primary_agent.name.first
+    primary_agent.relationship
+    primary_agent.address.address
+    appoint_alternate_agent
+    if appoint_alternate_agent:
+      alternate_agent.name.first
+      alternate_agent.relationship
+      alternate_agent.address.address
+    limits_on_powers
+  if directive_choices["instructions"]:
+    nav.set_section("instructions")
+    health_care_goals
+    beliefs_about_quality_of_life
+    temporary_incapacity_wishes
+    dependent_care_wishes
+    preferred_doctor
+    organ_donation_wishes
+    if not directive_choices["agent"] and not any(str(value).strip() for value in [health_care_goals, health_care_fears, spiritual_beliefs, beliefs_about_quality_of_life, thoughts_about_family, pregnancy_care_wishes, temporary_incapacity_wishes, dying_care_wishes, permanent_unconsciousness_wishes, dependent_care_wishes, pain_relief_wishes, preferred_doctor, preferred_care_location, preferred_dying_location, organ_donation_wishes, body_disposition_wishes, other_health_care_wishes]):
+      force_ask("organ_donation_wishes")
+  nav.set_section("review_health_care_directive_2026")
   health_care_directive_2026_download
 ---
-id: Health_Care_Directive_2026
+id: directive introduction
 continue button field: health_care_directive_2026_intro
 question: |
-  Health Care Directive 2026
+  Make a Minnesota health care directive
 subquestion: |
-  ### Before you get started
-  - Gather information about who you want to appoint as your health care agent.
-  - Think about your health care preferences and values.
-  
-  ### When you are finished
-  - Sign and date the document.
-  - Have it witnessed or notarized as required.
+  You can choose someone to make health care decisions for you, write down your
+  wishes, or do both.
 
-  This form is for anyone who wants to ensure their health care preferences are respected. It's especially useful if you want someone to make decisions for you if you're unable to do so.
+  You will print the document and sign it with witnesses or a notary.
+  This interview does not collect electronic signatures.
 
+  Read [Health Care Directives](https://www.lawhelpmn.org/self-help-library/fact-sheet/health-care-directives) on LawHelpMN for more information.
 ---
-id: Your Name and Title
+id: directive choices
 question: |
-  Your Name and Title
+  What do you want your directive to include?
 fields:
-  - "Your full name": user_name
-  - "Your name or title": user
+- Choose one or both: directive_choices
+  datatype: checkboxes
+  choices:
+  - A health care agent to make decisions for me: agent
+  - Instructions about the health care I want: instructions
+  minlength: 1
+  none of the above: false
 ---
-id: Health Care Agent Information
+id: primary agent name
+sets:
+- primary_agent.name.first
+- primary_agent.name.middle
+- primary_agent.name.last
 question: |
-  Health Care Agent Information
+  Who do you want as your health care agent?
 subquestion: |
-  Please have the details of your health care agent ready.
+  Choose someone you trust to follow your wishes. Talk with this person before
+  you sign your directive.
 fields:
-  - "Name of health care agent": health_care_agent
-  - "Relationship of health care agent": agent[0].relationship
-  - "Relationship of alternate agent": agent[1].relationship
+- code: primary_agent.name_fields()
 ---
-id: Limits on Agent s Powers
+id: primary agent contact
 question: |
-  Limits on Agent's Powers
+  How can someone contact ${ primary_agent }?
 fields:
-  - "Limits on agent's powers": limits_on_powers
-  - "Thoughts on agent's powers": comments_on_agents_powers
+- Relationship to you: primary_agent.relationship
+- Phone number: primary_agent.phone_number
+  required: false
 ---
-id: preview health_care_directive_2026
+id: primary agent address
+sets:
+- primary_agent.address.address
+- primary_agent.address.city
+- primary_agent.address.state
+- primary_agent.address.zip
 question: |
-  Preview your form before you sign it
+  What is ${ primary_agent }'s address?
+fields:
+- code: primary_agent.address_fields()
+---
+id: alternate agent choice
+question: |
+  Do you want to choose an alternate agent?
 subquestion: |
-  Here is a preview of the form you will sign on the next page.   
-  
-  ${ al_recipient_bundle.as_pdf(key='preview') }
-
-  Click the image to open it in a new tab. Click the "Edit answers" button
-  to edit your answers.
-
-  ${ action_button_html(url_action('review_health_care_directive_2026'), label='Edit answers', color='info') }
-  
-  Please come back to this window to finish and sign your form.
-continue button field: health_care_directive_2026_preview_question    
+  An alternate can act if your first agent is not available.
+fields:
+- Choose an alternate agent: appoint_alternate_agent
+  datatype: yesnoradio
 ---
-code: |
-  signature_fields = []
+id: alternate agent name
+sets:
+- alternate_agent.name.first
+- alternate_agent.name.middle
+- alternate_agent.name.last
+question: |
+  Who do you want as your alternate agent?
+fields:
+- code: alternate_agent.name_fields()
 ---
-id: health care directive 2026 review screen
+id: alternate agent contact
+question: |
+  How can someone contact ${ alternate_agent }?
+fields:
+- Relationship to you: alternate_agent.relationship
+- Phone number: alternate_agent.phone_number
+  required: false
+---
+id: alternate agent address
+sets:
+- alternate_agent.address.address
+- alternate_agent.address.city
+- alternate_agent.address.state
+- alternate_agent.address.zip
+question: |
+  What is ${ alternate_agent }'s address?
+fields:
+- code: alternate_agent.address_fields()
+---
+id: agent powers
+question: |
+  Do you want to limit your agent's powers?
+subquestion: |
+  The form describes the decisions an agent can make. You can limit those
+  powers or add instructions here. You may leave these answers blank.
+
+  The printed form also has two optional powers that you can give by
+  initialing the lines when you sign. Review those lines before signing.
+fields:
+- Limits on my agent's powers: limits_on_powers
+  datatype: area
+  required: false
+- Other instructions about my agent's powers: comments_on_agents_powers
+  datatype: area
+  required: false
+---
+id: beliefs and values
+question: |
+  What matters to you about your health care?
+subquestion: |
+  You may leave any answer blank. Your answers will be included in your directive.
+fields:
+- My goals for my health care: health_care_goals
+  datatype: area
+  required: false
+- My fears about my health care: health_care_fears
+  datatype: area
+  required: false
+- My spiritual or religious beliefs: spiritual_beliefs
+  datatype: area
+  required: false
+---
+id: quality of life
+question: |
+  How might your health affect your life and family?
+subquestion: |
+  You may leave any answer blank. Your answers will be included in your directive.
+fields:
+- My beliefs about when life would no longer be worth living: beliefs_about_quality_of_life
+  datatype: area
+  required: false
+- My thoughts about how my condition might affect my family: thoughts_about_family
+  datatype: area
+  required: false
+- My wishes about care during pregnancy, if this applies to me: pregnancy_care_wishes
+  datatype: area
+  required: false
+---
+id: treatment wishes
+question: |
+  What care would you want in these situations?
+subquestion: |
+  You may leave any answer blank. Your answers will be included in your directive.
+fields:
+- If I had a reasonable chance of recovery: temporary_incapacity_wishes
+  datatype: area
+  required: false
+- If I were dying: dying_care_wishes
+  datatype: area
+  required: false
+- If I were permanently unconscious: permanent_unconsciousness_wishes
+  datatype: area
+  required: false
+---
+id: dependence and pain relief
+question: |
+  What are your wishes about long-term care and pain relief?
+subquestion: |
+  You may leave any answer blank. Your answers will be included in your directive.
+fields:
+- If I were completely dependent on others: dependent_care_wishes
+  datatype: area
+  required: false
+- My wishes about pain relief and its effects: pain_relief_wishes
+  datatype: area
+  required: false
+---
+id: other care wishes
+question: |
+  What else do you want people to know?
+subquestion: |
+  You may leave any answer blank. Your answers will be included in your directive.
+fields:
+- Who I would like as my health care provider: preferred_doctor
+  datatype: area
+  required: false
+- Where I would like to receive care: preferred_care_location
+  datatype: area
+  required: false
+- Where I would like to die and other wishes about dying: preferred_dying_location
+  datatype: area
+  required: false
+---
+id: after death wishes
+question: |
+  What are your wishes after death?
+subquestion: |
+  You may leave any answer blank. Your answers will be included in your directive.
+fields:
+- My wishes about donating organs or other body parts: organ_donation_wishes
+  datatype: area
+  required: false
+- My wishes about burial, cremation, or other arrangements: body_disposition_wishes
+  datatype: area
+  required: false
+- Any other health care wishes: other_health_care_wishes
+  datatype: area
+  required: false
+validation code: |
+  if not directive_choices["agent"] and not any(str(value).strip() for value in [health_care_goals, health_care_fears, spiritual_beliefs, beliefs_about_quality_of_life, thoughts_about_family, pregnancy_care_wishes, temporary_incapacity_wishes, dying_care_wishes, permanent_unconsciousness_wishes, dependent_care_wishes, pain_relief_wishes, preferred_doctor, preferred_care_location, preferred_dying_location, organ_donation_wishes, body_disposition_wishes, other_health_care_wishes]):
+    validation_error("Write at least one health care instruction, or go back and choose an agent.", field="other_health_care_wishes")
+---
+id: directive review
 event: review_health_care_directive_2026
 question: |
   Review your answers
 review:
-  - Edit: comments_on_agents_powers
-    button: |
-      **Thoughts on agent's powers**:
-      ${ comments_on_agents_powers }
-  - Edit: agent.revisit
-    button: |
-      **Agent**
-
-      % for item in agent:
-        * ${ item }
-      % endfor
-  - Edit: health_care_agent
-    button: |
-      **Name of health care agent**:
-      ${ health_care_agent }
-  - Edit: user_name
-    button: |
-      **Your full name**:
-      ${ user_name }
-  - Edit: user
-    button: |
-      **Your name or title**:
-      ${ user }
-  - Edit: limits_on_powers
-    button: |
-      **Limits on agent's powers**:
-      ${ limits_on_powers }
+- Edit: users[0].name.first
+  button: |
+    **Name:** ${ users[0] }
+- Edit: users[0].birthdate
+  button: |
+    **Date of birth:** ${ users[0].birthdate }
+- Edit: users[0].address.address
+  button: |
+    **Address:** ${ users[0].address.on_one_line() }
+- Edit: directive_choices
+  button: |
+    **What to include:** ${ comma_and_list((["a health care agent"] if directive_choices["agent"] else []) + (["health care instructions"] if directive_choices["instructions"] else [])) }
+- Edit: primary_agent.name.first
+  show if: directive_choices['agent']
+  button: |
+    **Agent:** ${ showifdef('primary_agent') }
+- Edit: primary_agent.relationship
+  show if: directive_choices['agent']
+  button: |
+    Agent's relationship and phone number
+- Edit: primary_agent.address.address
+  show if: directive_choices['agent']
+  button: |
+    Agent's address
+- Edit: appoint_alternate_agent
+  show if: directive_choices['agent']
+  button: |
+    Choose or remove an alternate agent
+- Edit: alternate_agent.name.first
+  show if: directive_choices['agent'] and appoint_alternate_agent
+  button: |
+    **Alternate agent:** ${ showifdef('alternate_agent') }
+- Edit: alternate_agent.relationship
+  show if: directive_choices['agent'] and appoint_alternate_agent
+  button: |
+    Alternate agent's relationship and phone number
+- Edit: alternate_agent.address.address
+  show if: directive_choices['agent'] and appoint_alternate_agent
+  button: |
+    Alternate agent's address
+- Edit: limits_on_powers
+  show if: directive_choices['agent']
+  button: |
+    Limits and instructions about agent powers
+- Edit: health_care_goals
+  show if: directive_choices['instructions']
+  button: |
+    Your beliefs and values
+- Edit: temporary_incapacity_wishes
+  show if: directive_choices['instructions']
+  button: |
+    Your treatment wishes
+- Edit: beliefs_about_quality_of_life
+  show if: directive_choices['instructions']
+  button: |
+    Your wishes about quality of life and family
+- Edit: dependent_care_wishes
+  show if: directive_choices['instructions']
+  button: |
+    Your wishes about long-term care and pain relief
+- Edit: organ_donation_wishes
+  show if: directive_choices['instructions']
+  button: |
+    Your wishes after death
+- Edit: preferred_doctor
+  show if: directive_choices['instructions']
+  button: |
+    Other health care wishes
 ---
-id: edit agent
-continue button field: agent.revisit
-question: |
-  Edit agent
-subquestion: |
-  ${ agent.table }
-
-  ${ agent.add_action() }
----
-table: agent.table
-rows: agent
-columns:
-  - Address: |
-      row_item.address.block() if defined("row_item.address.address") else ""
-  - Name: |
-      row_item.name_full() if defined("row_item.name.first") else ""
-  - Phone number: |
-      row_item.phone_number if defined("row_item.phone_number") else ""
-  - Relationship: |
-      row_item.relationship if defined("row_item.relationship") else ""
-edit:
-  - address.address
-  - name.first
-  - phone_number
-  - relationship
-confirm: True
-
----
-id: download health_care_directive_2026
+id: download health care directive
 event: health_care_directive_2026_download
 question: |
-  All done
+  Review and print your directive
 subquestion: |
-  Thank you ${users}. Your form is ready to download and deliver.
-  
-  View, download and send your form below. Click the "Edit answers" button to fix any mistakes.
+  Your directive is ready to review. Check every page before signing.
 
   ${ action_button_html(url_action('review_health_care_directive_2026'), label='Edit answers', color='info') }
-  
-  
+
   ${ al_user_bundle.download_list_html() }
-  
 
-  ${ al_user_bundle.send_button_html(show_editable_checkbox=True) }
+  Sign and date the printed document using its witness or notary section.
+  The download is not a signed directive.
 
+  Learn more: [Health Care Directives](https://www.lawhelpmn.org/self-help-library/fact-sheet/health-care-directives) on LawHelpMN.
 progress: 100
 ---
-# ALDocument objects specify the metadata for each template
 objects:
-  - health_care_directive_2026_Post_interview_instructions: ALDocument.using(title="Instructions", filename="health_care_directive_2026_next_steps.docx", enabled=True, has_addendum=False)
-  - health_care_directive_2026_attachment: ALDocument.using(title="Health Care Directive 2026", filename="health_care_directive_2026", enabled=True, has_addendum=False, )
+- health_care_directive_2026_Post_interview_instructions: ALDocument.using(title="Instructions", filename="health_care_directive_2026_next_steps.docx",
+    enabled=True, has_addendum=False)
+- health_care_directive_2026_attachment: ALDocument.using(title="Health Care Directive 2026", filename="health_care_directive_2026",
+    enabled=True, has_addendum=False, )
 ---
-# Bundles group the ALDocuments into separate downloads, such as for court and for the user
 objects:
-  - al_user_bundle: ALDocumentBundle.using(elements=[health_care_directive_2026_Post_interview_instructions, health_care_directive_2026_attachment], filename="health_care_directive_2026", title="All forms to download for your records", enabled=True)
-  - al_recipient_bundle: ALDocumentBundle.using(elements=[health_care_directive_2026_attachment],  filename="health_care_directive_2026", title="All forms to file", enabled=True)
+- al_user_bundle: ALDocumentBundle.using(elements=[health_care_directive_2026_Post_interview_instructions,
+    health_care_directive_2026_attachment], filename="health_care_directive_2026", title="All forms to
+    download for your records", enabled=True)
+- al_recipient_bundle: ALDocumentBundle.using(elements=[health_care_directive_2026_attachment],  filename="health_care_directive_2026",
+    title="All forms to file", enabled=True)
 ---
-# Each attachment defines a key in an ALDocument. We use `i` as the placeholder here so the same template is 
-# used for "preview" and "final" keys, and logic in the template checks the value of 
-# `i` to show or hide the user's signature
 attachment:
   name: Post-interview-Instructions
   filename: health_care_directive_2026_next_steps
   docx template file: health_care_directive_2026_next_steps.docx
   variable name: health_care_directive_2026_Post_interview_instructions[i]
-  skip undefined: True
-  tagged pdf: True
+  tagged pdf: true
 ---
 attachment:
   name: health care directive 2026
   filename: health_care_directive_2026
   variable name: health_care_directive_2026_attachment[i]
-  skip undefined: True
   docx template file: health_care_directive_2026.docx
-  tagged pdf: True
-
-
-
+  tagged pdf: true
