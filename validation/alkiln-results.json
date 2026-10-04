@@ -1,0 +1,90 @@
+{
+  "date": "2026-10-04",
+  "server": "localhost",
+  "package": "HealthCareDirective2026",
+  "alkiln_commit": "d7e4f42aa8a828013a8a229067697decf1322e5f",
+  "application_commit": "58d9b9d6bd6194d1f194e1c762ce54af6252e9b4",
+  "fixture_and_harness_sha256": {
+    "tests/steps.cjs": "fb643f9cb1476863f8312eea9126d4a0939c6b366bfb103ebcff45d548324645",
+    "tests/run_alkiln.py": "40805dd9ebe460ae3f36c394891dae778445edba719867abdbac4b7a1aa63cb2",
+    "docassemble/HealthCareDirective2026/data/sources/scenarios.feature": "45336799a290154c0002c50c72cbd4188fc44ec7a05bc0f53725b2b7bcfa0467"
+  },
+  "local_artifacts": ".alkiln-artifacts/20261004-190606",
+  "scenario_count": 8,
+  "passed": 8,
+  "step_count": 63,
+  "scenarios": [
+    {
+      "name": "Maya gives instructions without appointing anyone",
+      "tags": [
+        "@instructions_only"
+      ],
+      "status": "passed",
+      "steps": 7,
+      "duration_seconds": 9.257
+    },
+    {
+      "name": "Devon appoints one agent and leaves optional instructions blank",
+      "tags": [
+        "@agent_only"
+      ],
+      "status": "passed",
+      "steps": 6,
+      "duration_seconds": 9.826
+    },
+    {
+      "name": "Noor appoints an agent and alternate and writes care wishes",
+      "tags": [
+        "@combined"
+      ],
+      "status": "passed",
+      "steps": 8,
+      "duration_seconds": 17.775
+    },
+    {
+      "name": "Casey combines instructions with one agent",
+      "tags": [
+        "@combined_no_alternate"
+      ],
+      "status": "passed",
+      "steps": 7,
+      "duration_seconds": 18.671
+    },
+    {
+      "name": "Mar\u00eda writes long wishes with accented names and punctuation",
+      "tags": [
+        "@long_unicode"
+      ],
+      "status": "passed",
+      "steps": 6,
+      "duration_seconds": 19.113
+    },
+    {
+      "name": "Lee leaves all instructions blank without an agent",
+      "tags": [
+        "@blank_instructions"
+      ],
+      "status": "passed",
+      "steps": 6,
+      "duration_seconds": 11.611
+    },
+    {
+      "name": "Noor removes the agent after reaching downloads",
+      "tags": [
+        "@remove_agent"
+      ],
+      "status": "passed",
+      "steps": 12,
+      "duration_seconds": 33.798
+    },
+    {
+      "name": "Noor removes only the alternate agent",
+      "tags": [
+        "@remove_alternate"
+      ],
+      "status": "passed",
+      "steps": 11,
+      "duration_seconds": 22.819
+    }
+  ]
+}

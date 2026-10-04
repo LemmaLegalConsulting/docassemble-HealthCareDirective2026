@@ -1,31 +1,15 @@
-Checker source: SuffolkLITLab/DAYamlChecker@5676a949ebca269325eb0d8bf0abad52eda4aa61 (source version 1.7.0)
-Command: dayamlchecker --style .
-Exit code: 0
+Found 10 issues (0 errors, 0 warnings, 10 infos):
+INFO  [IS740] docassemble/HealthCareDirective2026/data/questions/health_care_directive_2026.yml:121
+  screen has 0 known logical inputs and a possible count of unknown (generated fields); inspect conditional/generated fields before deciding whether to split the screen
 
-Found 17 issues (0 errors, 3 warnings, 14 infos):
-WARN  [WT702] docassemble/HealthCareDirective2026/data/questions/health_care_directive_2026.yml:71
-  move user-facing text out of `code:` blocks and into a translatable template: Create your health care directive now
+INFO  [IS740] docassemble/HealthCareDirective2026/data/questions/health_care_directive_2026.yml:143
+  screen has 0 known logical inputs and a possible count of unknown (generated fields); inspect conditional/generated fields before deciding whether to split the screen
 
-INFO  [IS712] docassemble/HealthCareDirective2026/data/questions/health_care_directive_2026.yml:136
-  consider replacing 'appoint' in subquestion with simpler language, such as 'choose, name'
+INFO  [IS740] docassemble/HealthCareDirective2026/data/questions/health_care_directive_2026.yml:162
+  screen has 0 known logical inputs and a possible count of unknown (generated fields); inspect conditional/generated fields before deciding whether to split the screen
 
-INFO  [IS712] docassemble/HealthCareDirective2026/data/questions/health_care_directive_2026.yml:136
-  consider replacing 'witnessed' in subquestion with simpler language, such as 'saw'
-
-INFO  [IS712] docassemble/HealthCareDirective2026/data/questions/health_care_directive_2026.yml:136
-  consider replacing 'ensure' in subquestion with simpler language, such as 'make sure'
-
-INFO  [IS712] docassemble/HealthCareDirective2026/data/questions/health_care_directive_2026.yml:158
-  consider replacing 'Please' in subquestion with simpler language, such as '(omit)'
-
-INFO  [IS712] docassemble/HealthCareDirective2026/data/questions/health_care_directive_2026.yml:175
-  consider replacing 'Please' in subquestion with simpler language, such as '(omit)'
-
-INFO  [IA561] docassemble/HealthCareDirective2026/data/templates/health_care_directive_2026.docx
-  the document title metadata is missing
-
-WARN  [WA541] docassemble/HealthCareDirective2026/data/templates/health_care_directive_2026.docx
-  an image in word/document.xml has no alt text and is not marked decorative (near "Printed name of person who I asked to sign this document for me")
+INFO  [IS740] docassemble/HealthCareDirective2026/data/questions/health_care_directive_2026.yml:181
+  screen has 0 known logical inputs and a possible count of unknown (generated fields); inspect conditional/generated fields before deciding whether to split the screen
 
 INFO  [IA563] docassemble/HealthCareDirective2026/data/templates/health_care_directive_2026.docx
   a heading in word/document.xml is all caps; review readability (the heading is "MINNESOTA STATUTE § 145C")
@@ -43,13 +27,4 @@ INFO  [IA563] docassemble/HealthCareDirective2026/data/templates/health_care_dir
   a heading in word/document.xml is all caps; review readability (the heading is "THIS IS WHAT I WANT AND DO NOT WANT FOR MY HEALTH CARE")
 
 INFO  [IA565] docassemble/HealthCareDirective2026/data/templates/health_care_directive_2026.docx
-  109 empty paragraphs are used for spacing, the longest run being 9 (longest run is near "Date signed: __________ Date of birth: {{ users[0].birthdate }}Address: {{…")
-
-INFO  [IA561] docassemble/HealthCareDirective2026/data/templates/health_care_directive_2026_next_steps.docx
-  the document title metadata is missing
-
-WARN  [WA557] docassemble/HealthCareDirective2026/data/templates/health_care_directive_2026_next_steps.docx
-  heading structure starts at level 2 instead of level 1
-
-INFO  [IA565] docassemble/HealthCareDirective2026/data/templates/health_care_directive_2026_next_steps.docx
-  8 empty paragraphs are used for spacing, the longest run being 2 (longest run is near "Congratulations {{ users }}! You have finished all the forms you need to Create…")
+  112 empty paragraphs are used for spacing, the longest run being 9 (longest run is near "Date signed: __________ Date of birth: {{ users[0].birthdate }}Address: {{…")
