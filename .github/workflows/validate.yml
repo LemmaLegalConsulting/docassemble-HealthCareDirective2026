@@ -1,0 +1,19 @@
+name: Validate interviews
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  dayamlchecker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install pinned checker
+        run: python -m pip install -r requirements-dev.txt
+      - name: Check YAML, Python, URLs, templates, accessibility, and style
+        run: dayamlchecker --style .

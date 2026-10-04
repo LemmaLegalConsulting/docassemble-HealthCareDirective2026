@@ -1,0 +1,37 @@
+Checker source: SuffolkLITLab/DAYamlChecker@5676a949ebca269325eb0d8bf0abad52eda4aa61 (source version 1.7.0)
+Command: dayamlchecker .
+Exit code: 0
+
+Found 11 issues (0 errors, 2 warnings, 9 infos):
+INFO  [IA561] docassemble/HealthCareDirective2026/data/templates/health_care_directive_2026.docx
+  the document title metadata is missing
+
+WARN  [WA541] docassemble/HealthCareDirective2026/data/templates/health_care_directive_2026.docx
+  an image in word/document.xml has no alt text and is not marked decorative (near "Printed name of person who I asked to sign this document for me")
+
+INFO  [IA563] docassemble/HealthCareDirective2026/data/templates/health_care_directive_2026.docx
+  a heading in word/document.xml is all caps; review readability (the heading is "MINNESOTA STATUTE § 145C")
+
+INFO  [IA563] docassemble/HealthCareDirective2026/data/templates/health_care_directive_2026.docx
+  a heading in word/document.xml is all caps; review readability (the heading is "HEALTH CARE DIRECTIVE")
+
+INFO  [IA563] docassemble/HealthCareDirective2026/data/templates/health_care_directive_2026.docx
+  a heading in word/document.xml is all caps; review readability (the heading is "THIS IS WHAT I WANT MY HEALTH CARE AGENT")
+
+INFO  [IA563] docassemble/HealthCareDirective2026/data/templates/health_care_directive_2026.docx
+  a heading in word/document.xml is all caps; review readability (the heading is "TO BE ABLE TO DO IF I AM UNABLE TO DECIDE OR SPEAK FOR MYSELF")
+
+INFO  [IA563] docassemble/HealthCareDirective2026/data/templates/health_care_directive_2026.docx
+  a heading in word/document.xml is all caps; review readability (the heading is "THIS IS WHAT I WANT AND DO NOT WANT FOR MY HEALTH CARE")
+
+INFO  [IA565] docassemble/HealthCareDirective2026/data/templates/health_care_directive_2026.docx
+  109 empty paragraphs are used for spacing, the longest run being 9 (longest run is near "Date signed: __________ Date of birth: {{ users[0].birthdate }}Address: {{…")
+
+INFO  [IA561] docassemble/HealthCareDirective2026/data/templates/health_care_directive_2026_next_steps.docx
+  the document title metadata is missing
+
+WARN  [WA557] docassemble/HealthCareDirective2026/data/templates/health_care_directive_2026_next_steps.docx
+  heading structure starts at level 2 instead of level 1
+
+INFO  [IA565] docassemble/HealthCareDirective2026/data/templates/health_care_directive_2026_next_steps.docx
+  8 empty paragraphs are used for spacing, the longest run being 2 (longest run is near "Congratulations {{ users }}! You have finished all the forms you need to Create…")

@@ -1,0 +1,2 @@
+# DAYamlChecker source version 1.7.0, pinned to the reviewed revision.
+dayamlchecker @ git+https://github.com/SuffolkLITLab/DAYamlChecker.git@5676a949ebca269325eb0d8bf0abad52eda4aa61

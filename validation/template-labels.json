@@ -1,0 +1,205 @@
+{
+  "scope": "Static template labels and attachment mapping; no end-to-end interview certification",
+  "method": "ALDashboard get_docx_run_items/update_docx/validate_docx_template_syntax; pikepdf logical-field inspection",
+  "templates": [
+    {
+      "file": "health_care_directive_2026.docx",
+      "type": "docx",
+      "expressions": [
+        "agent",
+        "agent[0].address.on_one_line()",
+        "agent[0].phone_number",
+        "agent[0].relationship",
+        "agent[1]",
+        "agent[1].address.on_one_line()",
+        "agent[1].phone_number",
+        "agent[1].relationship",
+        "beliefs_about_quality_of_life",
+        "body_disposition_wishes",
+        "comments_on_agents_powers",
+        "dependent_care_wishes",
+        "dying_care_wishes",
+        "health_care_agent",
+        "health_care_fears",
+        "health_care_goals",
+        "limits_on_powers",
+        "organ_donation_wishes",
+        "other_health_care_wishes",
+        "pain_relief_wishes",
+        "permanent_unconsciousness_wishes",
+        "preferred_care_location",
+        "preferred_doctor",
+        "preferred_dying_location",
+        "pregnancy_care_wishes",
+        "spiritual_beliefs",
+        "temporary_incapacity_wishes",
+        "thoughts_about_family",
+        "user",
+        "user_name",
+        "users[0].address.on_one_line()",
+        "users[0].birthdate"
+      ],
+      "new_labels": [
+        {
+          "variable": "health_care_goals",
+          "prompt": "My goals for my health care:",
+          "status": "label added; interview question still needed"
+        },
+        {
+          "variable": "health_care_fears",
+          "prompt": "My fears about my health care:",
+          "status": "label added; interview question still needed"
+        },
+        {
+          "variable": "spiritual_beliefs",
+          "prompt": "My spiritual or religious beliefs and traditions:",
+          "status": "label added; interview question still needed"
+        },
+        {
+          "variable": "beliefs_about_quality_of_life",
+          "prompt": "My beliefs about when life would be no longer worth living:",
+          "status": "label added; interview question still needed"
+        },
+        {
+          "variable": "thoughts_about_family",
+          "prompt": "My thoughts about how my .medical condition might affect my family:",
+          "status": "label added; interview question still needed"
+        },
+        {
+          "variable": "pregnancy_care_wishes",
+          "prompt": "(For a woman of childbearing age) My thoughts about how my health care should be handled in the event I am pregnant:",
+          "status": "label added; interview question still needed"
+        },
+        {
+          "variable": "temporary_incapacity_wishes",
+          "prompt": "If I had a reasonable chance of recovery, and were temporarily unable to decide or speak for myself, I would want:",
+          "status": "label added; interview question still needed"
+        },
+        {
+          "variable": "dying_care_wishes",
+          "prompt": "If I were dying and unable to decide or speak for myself, I would want:",
+          "status": "label added; interview question still needed"
+        },
+        {
+          "variable": "permanent_unconsciousness_wishes",
+          "prompt": "If I were permanently unconscious and unable to decide or speak for myself, I would want:",
+          "status": "label added; interview question still needed"
+        },
+        {
+          "variable": "dependent_care_wishes",
+          "prompt": "If I were completely dependent on others for my care and unable to decide or speak for myself, I would want:",
+          "status": "label added; interview question still needed"
+        },
+        {
+          "variable": "pain_relief_wishes",
+          "prompt": "In all circumstances, my doctors will try to keep me comfortable and reduce my pain . This is how I feel about pain relief if it would affect my alertness or if it could shorten my life:",
+          "status": "label added; interview question still needed"
+        },
+        {
+          "variable": "preferred_doctor",
+          "prompt": "Who I would like to be my doctor:",
+          "status": "label added; interview question still needed"
+        },
+        {
+          "variable": "preferred_care_location",
+          "prompt": "Where I would like to live to receive health care:",
+          "status": "label added; interview question still needed"
+        },
+        {
+          "variable": "preferred_dying_location",
+          "prompt": "Where I would like to die and other wishes I have about dying:",
+          "status": "label added; interview question still needed"
+        },
+        {
+          "variable": "organ_donation_wishes",
+          "prompt": "My wishes about donating parts of my body when I die:",
+          "status": "label added; interview question still needed"
+        },
+        {
+          "variable": "body_disposition_wishes",
+          "prompt": "My wishes about what happens to my body when I die (cremation, burial):",
+          "status": "label added; interview question still needed"
+        },
+        {
+          "variable": "other_health_care_wishes",
+          "prompt": "Any other things:",
+          "status": "label added; interview question still needed"
+        }
+      ],
+      "syntax": {
+        "valid": true,
+        "errors": [],
+        "warnings": [
+          {
+            "code": "docxtpl_special_tag_missing_space",
+            "severity": "low",
+            "message": "docxtpl special tag '{{ p ... }}' should include a space after 'p'. Without that space, python-docx-template may treat it as a special structural tag by accident.",
+            "paragraph": 98,
+            "paragraph_text": "{{ pregnancy_care_wishes }}",
+            "match_text": "{{ p"
+          },
+          {
+            "code": "docxtpl_special_tag_missing_space",
+            "severity": "low",
+            "message": "docxtpl special tag '{{ p ... }}' should include a space after 'p'. Without that space, python-docx-template may treat it as a special structural tag by accident.",
+            "paragraph": 114,
+            "paragraph_text": "{{ permanent_unconsciousness_wishes }}",
+            "match_text": "{{ p"
+          },
+          {
+            "code": "docxtpl_special_tag_missing_space",
+            "severity": "low",
+            "message": "docxtpl special tag '{{ p ... }}' should include a space after 'p'. Without that space, python-docx-template may treat it as a special structural tag by accident.",
+            "paragraph": 120,
+            "paragraph_text": "{{ pain_relief_wishes }}",
+            "match_text": "{{ p"
+          },
+          {
+            "code": "docxtpl_special_tag_missing_space",
+            "severity": "low",
+            "message": "docxtpl special tag '{{ p ... }}' should include a space after 'p'. Without that space, python-docx-template may treat it as a special structural tag by accident.",
+            "paragraph": 124,
+            "paragraph_text": "{{ preferred_doctor }}",
+            "match_text": "{{ p"
+          },
+          {
+            "code": "docxtpl_special_tag_missing_space",
+            "severity": "low",
+            "message": "docxtpl special tag '{{ p ... }}' should include a space after 'p'. Without that space, python-docx-template may treat it as a special structural tag by accident.",
+            "paragraph": 126,
+            "paragraph_text": "{{ preferred_care_location }}",
+            "match_text": "{{ p"
+          },
+          {
+            "code": "docxtpl_special_tag_missing_space",
+            "severity": "low",
+            "message": "docxtpl special tag '{{ p ... }}' should include a space after 'p'. Without that space, python-docx-template may treat it as a special structural tag by accident.",
+            "paragraph": 128,
+            "paragraph_text": "{{ preferred_dying_location }}",
+            "match_text": "{{ p"
+          }
+        ],
+        "error_count": 0,
+        "warning_count": 6
+      },
+      "manual_completion": "Signature, initials, execution dates, witness/notary attestations remain for completion when signing"
+    },
+    {
+      "file": "health_care_directive_2026_next_steps.docx",
+      "type": "docx",
+      "expressions": [
+        "showifdef('other_parties[0]')",
+        "users"
+      ],
+      "new_labels": [],
+      "syntax": {
+        "valid": true,
+        "errors": [],
+        "warnings": [],
+        "error_count": 0,
+        "warning_count": 0
+      },
+      "manual_completion": null
+    }
+  ]
+}
