@@ -1,44 +1,47 @@
 # Development setup
 
-Local checkout: `/home/quinten/minnesota/docassemble-HealthCareDirective2026`.
-Working repository: https://github.com/LemmaLegalConsulting/docassemble-HealthCareDirective2026
-Original repository (`upstream`): https://github.com/AmandaSauber/docassemble-HealthCareDirective2026
-Setup branch: `setup/validation-and-review`.
+Working repo: https://github.com/LemmaLegalConsulting/docassemble-HealthCareDirective2026
+Original (`upstream`): https://github.com/AmandaSauber/docassemble-HealthCareDirective2026
+Branch: `setup/validation-and-review`. The local test installation is on `http://localhost`; no apps-dev or public deployment was performed.
 
-## Validate
+## Static and template checks
 
 ```sh
 uv venv .venv
 uv pip install --python .venv/bin/python -r requirements-dev.txt
 .venv/bin/dayamlchecker --style .
+.venv/bin/python -m unittest discover -s tests -p 'test_*.py'
 ```
 
-The checker is pinned to source version 1.7.0 at `5676a949ebca269325eb0d8bf0abad52eda4aa61`. This includes DOCX comments/tracked-change checks absent from the globally installed 1.4.0 checker. URL and accessibility checks stay enabled; errors fail the check, warnings remain review tasks. `--no-url-check` is useful for offline iteration only. GitHub Actions runs the full command on pushes and pull requests.
+DAYamlChecker is pinned to source commit `5676a949ebca269325eb0d8bf0abad52eda4aa61` (source version 1.7.0). URL and accessibility checks stay enabled. Errors fail CI; warnings remain review work. GitHub Actions also runs template regression tests. Use `uv run --no-project --with-requirements requirements-dev.txt ...` if running tools without installing this interview's runtime dependencies.
 
-Saved baseline results are in `validation/`. The checker cannot verify legal correctness, all undefined runtime variables, rendered output, or complete interview paths. See [IMPROVEMENTS.md](IMPROVEMENTS.md) for those tasks.
-
-## Run on Docassemble
-
-Install this repository's `setup/validation-and-review` branch through a development server's package administration screen, including its declared dependencies. Then open:
-
-```text
-https://apps-dev.suffolklitlab.org/interview?i=docassemble.HealthCareDirective2026:data/questions/health_care_directive_2026.yml
-```
-
-This launch URL works after installation; this setup task has not installed or deployed the branch. Use synthetic test information. Do not publish until the P0 items and client content review are complete.
-
-## Continue development
+## Run the interview locally
 
 ```sh
-git fetch upstream
-git switch setup/validation-and-review
-git status
+/home/quinten/venv/bin/dainstall --server localhost .
 ```
 
-Keep `upstream` for Amanda's source history and `origin` for Lemma's fork. Review any newer upstream changes before merging. The checked-out setup branch contains validation fixes and review documentation, not the full substantive completion work.
+Open `http://localhost/interview?i=docassemble.HealthCareDirective2026:data/questions/health_care_directive_2026.yml&new_session=1`.
+Installing a package may restart the server; finish installations before starting browser suites. Use only synthetic test data.
 
-## Template labels
+## ALKiln story tables
 
-`validation/template-labels.json` inventories every DOCX expression and every logical PDF field, its accessible label, and its YAML mapping. `validation/template-verification.json` records independent synthetic rendering checks. Those checks do not exercise a running interview.
+Fixtures: `docassemble/HealthCareDirective2026/data/sources/scenarios.feature`.
+Narratives and expected behavior: [TEST_SCENARIOS.md](TEST_SCENARIOS.md).
 
-The workspace's `scripts/label_templates.py` uses ALDashboard's run editor and syntax validator and preserves existing PDF field names except the corrected child-2 field. Intentional repeated appearances of the same owner and valid radio-button groups remain linked. Wet signatures, initials, execution dates, and witness/notary completion remain manual; the inventory records that boundary. `scripts/verify_templates.py` checks the templates using synthetic data. New HCD labels require corresponding interview questions before release. Next-steps boilerplate still needs client-approved content.
+```sh
+# Requires a checkout of ALKiln with its npm dependencies and Chromium installed.
+# Defaults to ~/ALKiln; override ALKILN_PATH if needed.
+.venv/bin/python tests/run_alkiln.py .
+# Optional second argument is a Cucumber tag expression.
+```
+
+The runner uses the `localhost` entry in `~/.docassemblecli`, without printing or storing its key in tracked files. Install the package first. It tests the installed package rather than uploading a Playground. Reports, screenshots, and synthetic downloads go to ignored `.alkiln-artifacts/`. It requires Node, Chromium/Puppeteer, PyYAML, and `pdftotext` (Poppler).
+
+Tested ALKiln checkout: `d7e4f42aa8a828013a8a229067697decf1322e5f`. `tests/steps.cjs` contains PDF assertions and narrow compatibility fixes for current Docassemble: button containers are divs, checkbox state is read from the native input, and Resume may change the question without changing the URL. Read-only error queries retry briefly if navigation replaces the DOM; input actions and assertion failures are never ignored. It also stops promptly on AssemblyLine's custom error screen. These are test-harness changes, not suppressed application failures. Reassess them when upgrading ALKiln.
+
+## Template audit and decisions
+
+`validation/template-labels.json` records the current labels and control tags. `validation/template-verification.json` records strict synthetic rendering and PDF checks. The workspace scripts `audit_current_templates.py` and `verify_templates.py` refresh them. Early one-time migration scripts are historical and should not be rerun against the edited templates.
+
+Keep wet signatures, initials, execution dates, and witness/notarial attestations manual. Record substantive choices and sources in [DECISIONS.md](DECISIONS.md); keep the remaining release decisions in [IMPROVEMENTS.md](IMPROVEMENTS.md).

@@ -28,3 +28,7 @@ Use the verified matching LawHelpMN resource, [Health Care Directives](https://w
 Replace the undeclared legacy agent list with explicit primary/alternate individuals. Ask only the selected agent/instruction branches, expose all 17 preferences in small topic groups, and omit unanswered prompts in the DOCX. Require an instruction if no agent is selected. Reevaluate the mandatory controller on review edits so cached completion flags cannot bypass a new branch. Keep wet signatures and optional-power initials on paper. Replace unrelated court/appeal instructions with directive-specific next steps.
 
 Validation so far: localhost browser walkthroughs reached downloads for instructions-only, primary-agent-only, and both with an alternate. Strict synthetic DOCX tests also cover combined/no-alternate and special characters in all 17 answers. The broader story-table suite and layout review are in progress.
+
+## Testing approach
+
+Use narrative ALKiln story tables plus assertions against downloaded PDF text. Include negative paths, recording-date/deadline boundaries, optional people, long text, and review edits. Save raw artifacts locally and commit only a sanitized execution summary. Keep synthetic unit/template checks in CI. Distinguish failures in test-tool compatibility from actual interview defects; document both, and never turn a failed expectation into a pass without explaining the change.
