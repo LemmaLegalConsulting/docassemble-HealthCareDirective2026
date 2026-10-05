@@ -77,16 +77,21 @@ code: |
     limits_on_powers
   if directive_choices["instructions"]:
     nav.set_section("instructions")
+    # Define before the screens because validation code cannot look up undefined variables.
+    instruction_variables
     health_care_goals
     beliefs_about_quality_of_life
     temporary_incapacity_wishes
     dependent_care_wishes
     preferred_doctor
     organ_donation_wishes
-    if not directive_choices["agent"] and not any(str(value).strip() for value in [health_care_goals, health_care_fears, spiritual_beliefs, beliefs_about_quality_of_life, thoughts_about_family, pregnancy_care_wishes, temporary_incapacity_wishes, dying_care_wishes, permanent_unconsciousness_wishes, dependent_care_wishes, pain_relief_wishes, preferred_doctor, preferred_care_location, preferred_dying_location, organ_donation_wishes, body_disposition_wishes, other_health_care_wishes]):
+    if not directive_choices["agent"] and not any(str(value(name)).strip() for name in instruction_variables):
       force_ask("organ_donation_wishes")
   nav.set_section("review_health_care_directive_2026")
   health_care_directive_2026_download
+---
+code: |
+  instruction_variables = ["health_care_goals", "health_care_fears", "spiritual_beliefs", "beliefs_about_quality_of_life", "thoughts_about_family", "pregnancy_care_wishes", "temporary_incapacity_wishes", "dying_care_wishes", "permanent_unconsciousness_wishes", "dependent_care_wishes", "pain_relief_wishes", "preferred_doctor", "preferred_care_location", "preferred_dying_location", "organ_donation_wishes", "body_disposition_wishes", "other_health_care_wishes"]
 ---
 id: directive introduction
 continue button field: health_care_directive_2026_intro
@@ -128,10 +133,10 @@ fields:
 ---
 id: primary agent contact
 question: |
-  How can someone contact ${ primary_agent }?
+  Tell us about ${ primary_agent }
 fields:
 - Relationship to you: primary_agent.relationship
-- Phone number: primary_agent.phone_number
+- Phone number (optional): primary_agent.phone_number
   required: false
 ---
 id: primary agent address
@@ -166,10 +171,10 @@ fields:
 ---
 id: alternate agent contact
 question: |
-  How can someone contact ${ alternate_agent }?
+  Tell us about ${ alternate_agent }
 fields:
 - Relationship to you: alternate_agent.relationship
-- Phone number: alternate_agent.phone_number
+- Phone number (optional): alternate_agent.phone_number
   required: false
 ---
 id: alternate agent address
@@ -185,18 +190,18 @@ fields:
 ---
 id: agent powers
 question: |
-  Do you want to limit your agent's powers?
+  Do you want to limit what your agent can decide?
 subquestion: |
-  The form describes the decisions an agent can make. You can limit those
-  powers or add instructions here. You may leave these answers blank.
+  Your directive lists the decisions your agent can make. You can limit
+  those decisions or give your agent instructions. You can leave both boxes blank.
 
-  The printed form also has two optional powers that you can give by
-  initialing the lines when you sign. Review those lines before signing.
+  The printed form also lists 2 extra powers. To give your agent those
+  powers, initial the lines next to them when you sign.
 fields:
-- Limits on my agent's powers: limits_on_powers
+- Limits on my agent's powers (optional): limits_on_powers
   datatype: area
   required: false
-- Other instructions about my agent's powers: comments_on_agents_powers
+- Other instructions for my agent (optional): comments_on_agents_powers
   datatype: area
   required: false
 ---
@@ -293,7 +298,7 @@ fields:
   datatype: area
   required: false
 validation code: |
-  if not directive_choices["agent"] and not any(str(value).strip() for value in [health_care_goals, health_care_fears, spiritual_beliefs, beliefs_about_quality_of_life, thoughts_about_family, pregnancy_care_wishes, temporary_incapacity_wishes, dying_care_wishes, permanent_unconsciousness_wishes, dependent_care_wishes, pain_relief_wishes, preferred_doctor, preferred_care_location, preferred_dying_location, organ_donation_wishes, body_disposition_wishes, other_health_care_wishes]):
+  if not directive_choices["agent"] and not any(str(value(name)).strip() for name in instruction_variables):
     validation_error("Write at least one health care instruction, or go back and choose an agent.", field="other_health_care_wishes")
 ---
 id: directive review
@@ -320,15 +325,17 @@ review:
 - Edit: primary_agent.relationship
   show if: directive_choices['agent']
   button: |
-    Agent's relationship and phone number
+    **Agent's relationship to you:** ${ showifdef('primary_agent.relationship') }
 - Edit: primary_agent.address.address
   show if: directive_choices['agent']
   button: |
-    Agent's address
+    **Agent's address:** ${ primary_agent.address.on_one_line() if defined('primary_agent.address.address') else '' }
 - Edit: appoint_alternate_agent
   show if: directive_choices['agent']
   button: |
     Choose or remove an alternate agent
+
+    **Alternate agent chosen:** ${ yesno(appoint_alternate_agent) if defined('appoint_alternate_agent') else '' }
 - Edit: alternate_agent.name.first
   show if: directive_choices['agent'] and appoint_alternate_agent
   button: |
@@ -336,11 +343,11 @@ review:
 - Edit: alternate_agent.relationship
   show if: directive_choices['agent'] and appoint_alternate_agent
   button: |
-    Alternate agent's relationship and phone number
+    **Alternate agent's relationship to you:** ${ showifdef('alternate_agent.relationship') }
 - Edit: alternate_agent.address.address
   show if: directive_choices['agent'] and appoint_alternate_agent
   button: |
-    Alternate agent's address
+    **Alternate agent's address:** ${ alternate_agent.address.on_one_line() if defined('alternate_agent.address.address') else '' }
 - Edit: limits_on_powers
   show if: directive_choices['agent']
   button: |
@@ -348,41 +355,41 @@ review:
 - Edit: health_care_goals
   show if: directive_choices['instructions']
   button: |
-    Your beliefs and values
-- Edit: temporary_incapacity_wishes
-  show if: directive_choices['instructions']
-  button: |
-    Your treatment wishes
+    Your goals, fears, and beliefs
 - Edit: beliefs_about_quality_of_life
   show if: directive_choices['instructions']
   button: |
     Your wishes about quality of life and family
+- Edit: temporary_incapacity_wishes
+  show if: directive_choices['instructions']
+  button: |
+    Your treatment wishes
 - Edit: dependent_care_wishes
   show if: directive_choices['instructions']
   button: |
     Your wishes about long-term care and pain relief
+- Edit: preferred_doctor
+  show if: directive_choices['instructions']
+  button: |
+    Your wishes about doctors and where you get care
 - Edit: organ_donation_wishes
   show if: directive_choices['instructions']
   button: |
     Your wishes after death
-- Edit: preferred_doctor
-  show if: directive_choices['instructions']
-  button: |
-    Other health care wishes
 ---
 id: download health care directive
 event: health_care_directive_2026_download
 question: |
   Review and print your directive
 subquestion: |
-  Your directive is ready to review. Check every page before signing.
+  Your directive is ready. Check every page before you sign it.
 
   ${ action_button_html(url_action('review_health_care_directive_2026'), label='Edit answers', color='info') }
 
   ${ al_user_bundle.download_list_html() }
 
-  Sign and date the printed document using its witness or notary section.
-  The download is not a signed directive.
+  Your directive is not valid until you sign it. Sign and date it in front
+  of 2 witnesses or a notary. Read the instructions for who can be a witness.
 
   Learn more: [Health Care Directives](https://www.lawhelpmn.org/self-help-library/fact-sheet/health-care-directives) on LawHelpMN.
 progress: 100
@@ -390,7 +397,7 @@ progress: 100
 objects:
 - health_care_directive_2026_Post_interview_instructions: ALDocument.using(title="Instructions", filename="health_care_directive_2026_next_steps.docx",
     enabled=True, has_addendum=False)
-- health_care_directive_2026_attachment: ALDocument.using(title="Health Care Directive 2026", filename="health_care_directive_2026",
+- health_care_directive_2026_attachment: ALDocument.using(title="Health care directive", filename="health_care_directive_2026",
     enabled=True, has_addendum=False, )
 ---
 objects:

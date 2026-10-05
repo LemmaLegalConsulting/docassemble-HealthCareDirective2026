@@ -32,3 +32,7 @@ Validation so far: localhost browser walkthroughs reached downloads for instruct
 ## Testing approach
 
 Use narrative ALKiln story tables plus assertions against downloaded PDF text. Include negative paths, recording-date/deadline boundaries, optional people, long text, and review edits. Save raw artifacts locally and commit only a sanitized execution summary. Keep synthetic unit/template checks in CI. Distinguish failures in test-tool compatibility from actual interview defects; document both, and never turn a failed expectation into a pass without explaining the change.
+
+## Plain-language and question-style review — 2026-10-04
+
+Reviewed screens against plain-language guidance and the Assembly Line "Writing good questions" guide. Agent detail screens now have accurate headings ("Tell us about…" instead of "How can someone contact…" over a relationship field). Optional fields are labeled "(optional)". The agent-powers screen no longer asks a yes/no question over two text boxes. The review screen now shows answers in interview order. The instruction-variable list is defined once and shared by the validation and the mandatory check. The download screen says plainly that the directive is not valid until it is signed with witnesses or a notary.
