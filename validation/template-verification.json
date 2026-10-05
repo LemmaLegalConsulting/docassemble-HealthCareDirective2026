@@ -1,0 +1,19 @@
+[
+  {
+    "template": "health_care_directive_2026.docx",
+    "status": "pass",
+    "strict_jinja_render": "pass",
+    "libreoffice_pdf_render": "pass",
+    "new_content_labels_found_in_pdf": 17,
+    "pdf_pages": 6,
+    "blank_optional_answers_render": "pass"
+  },
+  {
+    "template": "health_care_directive_2026_next_steps.docx",
+    "status": "pass",
+    "strict_jinja_render": "pass",
+    "libreoffice_pdf_render": "pass",
+    "new_content_labels_found_in_pdf": 0,
+    "pdf_pages": 1
+  }
+]

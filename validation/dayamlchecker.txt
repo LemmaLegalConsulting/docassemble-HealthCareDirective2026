@@ -1,0 +1,18 @@
+Found 6 issues (0 errors, 0 warnings, 6 infos):
+INFO  [IA563] docassemble/HealthCareDirective2026/data/templates/health_care_directive_2026.docx
+  a heading in word/document.xml is all caps; review readability (the heading is "MINNESOTA STATUTE § 145C")
+
+INFO  [IA563] docassemble/HealthCareDirective2026/data/templates/health_care_directive_2026.docx
+  a heading in word/document.xml is all caps; review readability (the heading is "HEALTH CARE DIRECTIVE")
+
+INFO  [IA563] docassemble/HealthCareDirective2026/data/templates/health_care_directive_2026.docx
+  a heading in word/document.xml is all caps; review readability (the heading is "THIS IS WHAT I WANT MY HEALTH CARE AGENT")
+
+INFO  [IA563] docassemble/HealthCareDirective2026/data/templates/health_care_directive_2026.docx
+  a heading in word/document.xml is all caps; review readability (the heading is "TO BE ABLE TO DO IF I AM UNABLE TO DECIDE OR SPEAK FOR MYSELF")
+
+INFO  [IA563] docassemble/HealthCareDirective2026/data/templates/health_care_directive_2026.docx
+  a heading in word/document.xml is all caps; review readability (the heading is "THIS IS WHAT I WANT AND DO NOT WANT FOR MY HEALTH CARE")
+
+INFO  [IA565] docassemble/HealthCareDirective2026/data/templates/health_care_directive_2026.docx
+  112 empty paragraphs are used for spacing, the longest run being 9 (longest run is near "Date signed: __________ Date of birth: {{ users[0].birthdate }}Address: {{…")
