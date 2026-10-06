@@ -36,3 +36,7 @@ Use narrative ALKiln story tables plus assertions against downloaded PDF text. I
 ## Plain-language and question-style review — 2026-10-04
 
 Reviewed screens against plain-language guidance and the Assembly Line "Writing good questions" guide. Agent detail screens now have accurate headings ("Tell us about…" instead of "How can someone contact…" over a relationship field). Optional fields are labeled "(optional)". The agent-powers screen no longer asks a yes/no question over two text boxes. The review screen now shows answers in interview order. The instruction-variable list is defined once and shared by the validation and the mandatory check. The download screen says plainly that the directive is not valid until it is signed with witnesses or a notary.
+
+## Shared LawHelpMN branding — 2026-10-05
+
+Reference the installed `docassemble.LawHelpMNBranding` package directly: `LawHelpMNBranding_custom.css` supplies the Bootstrap theme and `LawHelpMN2x_002_resized.png` supplies the full logo. Set the AssemblyLine organization title and homepage to LawHelpMN. The branding package must be installed on the server. No branding assets or CSS adapters are copied into the interviews.
