@@ -1,9 +1,7 @@
 ---
 include:
 - docassemble.AssemblyLine:assembly_line.yml
----
-features:
-  bootstrap theme: docassemble.LawHelpMNBranding:LawHelpMNBranding_custom.css
+- docassemble.LawHelpMNBranding:theme.yml
 ---
 metadata:
   title: Minnesota health care directive
@@ -35,8 +33,6 @@ metadata:
   help_page_title: Health Care Directives
 ---
 code: |
-  AL_ORGANIZATION_TITLE = "LawHelpMN"
-  AL_ORGANIZATION_HOMEPAGE = "https://www.lawhelpmn.org/"
   AL_DEFAULT_COUNTRY = "US"
   AL_DEFAULT_STATE = "MN"
   al_form_type = "other_form"
@@ -50,7 +46,6 @@ content: |
   Make a Minnesota health care directive
 ---
 objects:
-- al_logo: DAStaticFile.using(filename="docassemble.LawHelpMNBranding:LawHelpMN2x_002_resized.png", alt_text="LawHelpMN")
 - users: ALPeopleList.using(there_are_any=True, target_number=1)
 - primary_agent: ALIndividual
 - alternate_agent: ALIndividual

@@ -40,3 +40,7 @@ Reviewed screens against plain-language guidance and the Assembly Line "Writing 
 ## Shared LawHelpMN branding — 2026-10-05
 
 Reference the installed `docassemble.LawHelpMNBranding` package directly: `LawHelpMNBranding_custom.css` supplies the Bootstrap theme and `LawHelpMN2x_002_resized.png` supplies the full logo. Set the AssemblyLine organization title and homepage to LawHelpMN. The branding package must be installed on the server. No branding assets or CSS adapters are copied into the interviews.
+
+## Shared theme entrypoint — 2026-10-05
+
+The LemmaLegalConsulting fork now provides `docassemble.LawHelpMNBranding:theme.yml`. Include it after AssemblyLine instead of repeating the theme, logo, and organization settings in each interview. Install the Lemma fork (version 0.0.2 or later) on the server. This supersedes the direct configuration above and matches the shared theme include pattern used by LITLabTheme.
