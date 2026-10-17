@@ -30,7 +30,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y poppler-utils
-          npm install --prefix "$RUNNER_TEMP/alkiln" @suffolklitlab/alkiln@5.17.1
+          npm install --install-strategy=nested --prefix "$RUNNER_TEMP/alkiln" @suffolklitlab/alkiln@5.17.1
           echo "ALKILN_PATH=$RUNNER_TEMP/alkiln/node_modules/@suffolklitlab/alkiln" >> "$GITHUB_ENV"
       - name: Run all interview features with repository custom steps
         env:
