@@ -40,6 +40,7 @@ jobs:
           BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
           ALKILN_TAG_EXPRESSION: ${{ inputs.tags }}
           TZ: America/New_York
+          _ORIGIN: github
         run: python3 tests/run_alkiln_ci.py
       - name: Upload browser reports and generated documents
         if: always()
