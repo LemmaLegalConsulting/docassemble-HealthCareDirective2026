@@ -26,11 +26,26 @@ jobs:
         uses: SuffolkLITLab/ALKiln/action_for_github_server@7b399f7138a06cb411cb93bda4d2015cea9216c5 # v5
         with:
           DOCASSEMBLE_IMAGE: jhpyle/docassemble:1.10.7@sha256:c0b0a707a6cd2149d5777ee83af1ea1de544210e597371eac93e67a1503c395c
-      - name: Run interview tests and upload reports
-        uses: SuffolkLITLab/ALKiln@7b399f7138a06cb411cb93bda4d2015cea9216c5 # v5
-        with:
+      - name: Install ALKiln and PDF assertion tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y poppler-utils
+          npm install --prefix "$RUNNER_TEMP/alkiln" @suffolklitlab/alkiln@5.17.1
+          echo "ALKILN_PATH=$RUNNER_TEMP/alkiln/node_modules/@suffolklitlab/alkiln" >> "$GITHUB_ENV"
+      - name: Run all interview features with repository custom steps
+        env:
           SERVER_URL: ${{ steps.server.outputs.SERVER_URL }}
           DOCASSEMBLE_DEVELOPER_API_KEY: ${{ steps.server.outputs.DOCASSEMBLE_DEVELOPER_API_KEY }}
-          INSTALL_METHOD: server
-          ALKILN_VERSION: 5.17.1
+          REPO_URL: ${{ github.server_url }}/${{ github.repository }}
+          BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
           ALKILN_TAG_EXPRESSION: ${{ inputs.tags }}
+          TZ: America/New_York
+        run: python3 tests/run_alkiln_ci.py
+      - name: Upload browser reports and generated documents
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: alkiln-results
+          path: .alkiln-artifacts/ci
+          include-hidden-files: true
+          if-no-files-found: warn
