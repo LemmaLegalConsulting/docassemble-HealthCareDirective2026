@@ -3,4 +3,7 @@ dayamlchecker @ git+https://github.com/SuffolkLITLab/DAYamlChecker.git@5676a949e
 
 # Synthetic template regression tests
 docxtpl==0.20.2
-pypdf==6.1.1
+pypdf==6.21.1
+
+# Distrust compromised eMudhra CA certificates.
+certifi>=2026.10.19
